@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LogiFlow – Supply Chain Control Tower</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#3b82f6' },
+        },
+      },
+    };
+
+    const saved = localStorage.getItem('logiflow-theme');
+    if (saved === 'dark') document.documentElement.classList.add('dark');
+  </script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- ✅ FIXED Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    body {font-family: 'Inter', sans-serif;}
+    .sidebar {width: 240px;}
+    .badge {font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 0.25rem;}
+    .badge.in-transit {background-color: #93c5fd; color: #1e3a8a;}
+    .badge.delayed {background-color: #fca5a5; color: #991b1b;}
+    .badge.delivered {background-color: #86efac; color: #166534;}
+  </style>
+</head>
+
+<body class="h-full bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+
+<div class="flex h-full">
+
+  <!-- Sidebar -->
+  <aside class="sidebar bg-white dark:bg-gray-800 shadow-lg hidden md:block">
+    <div class="p-6">
+      <h1 class="text-2xl font-semibold text-primary">LogiFlow</h1>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1">
+
+    <header class="bg-white dark:bg-gray-800 p-4 flex justify-between">
+      <h2 class="text-xl">Control Tower</h2>
+
+      <button id="theme-toggle" class="p-2 bg-gray-200 dark:bg-gray-700 rounded">
+        🌗
+      </button>
+    </header>
+
+    <main class="p-6 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+
+      <!-- KPI -->
+      <div class="col-span-3 grid grid-cols-3 gap-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+          Total: <span id="total-count">0</span>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded shadow text-red-400">
+          Delayed: <span id="delayed-count">0</span>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded shadow text-green-400">
+          Delivered: <span id="delivered-count">0</span>
+        </div>
+      </div>
+
+      <!-- Alerts -->
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <h3>Alerts</h3>
+        <ul id="alerts-list"></ul>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <button id="add-shipment" class="bg-blue-500 text-white px-2 py-1 rounded">Add</button>
+        <table class="w-full">
+          <tbody id="shipment-table-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Map -->
+      <div class="bg-white dark:bg-gray-800 rounded shadow">
+        <div id="map" class="h-64"></div>
+      </div>
+
+      <!-- Charts -->
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <canvas id="status-pie"></canvas>
+      </div>
+
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <canvas id="updates-line"></canvas>
+      </div>
+
+    </main>
+
+  </div>
+</div>
+
+<!-- ✅ FIXED Leaflet JS (NO integrity) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Your JS -->
+<script type="module" src="assets/js/utils.js"></script>
+<script type="module" src="assets/js/map.js"></script>
+<script type="module" src="assets/js/charts.js"></script>
+<script type="module" src="assets/js/app.js"></script>
+
+</body>
+</html>
